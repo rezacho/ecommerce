@@ -8,4 +8,4 @@ class UserRegisterView(View):
 
     def get(self, request):
         form = self.form_class
-        return render(request, 'register.html', {'form': form})
+        return render(request, 'accounts/register.html', {'form': form})
