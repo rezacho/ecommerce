@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
 from models import OtpCode
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, VerifyCodeForm
 from utils import send_otp_code
 import random
 
@@ -29,3 +29,11 @@ class UserRegisterView(View):
             messages.success(request, 'We sent you verification code ', 'success')
             return redirect('accounts:verify_code')
         return redirect('home:home')
+
+
+class UserRegisterVerifyCodeView(View):
+    form_class = VerifyCodeForm
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, 'accounts/verify.html', {'form': form})
