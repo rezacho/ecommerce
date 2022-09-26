@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from models import User, OtpCode
+from .models import User, OtpCode
 from .forms import UserRegistrationForm, VerifyCodeForm
 from utils import send_otp_code
 import random
@@ -15,7 +15,7 @@ class UserRegisterView(View):
         return render(request, 'accounts/register.html', {'form': form})
 
     def post(self, request):
-        form = self.form_class
+        form = self.form_class(request.POST)
         if form.is_valid():
             random_code = random.randint(1000, 9999)
             send_otp_code(form.cleaned_data['phone_number'], code=random_code)
