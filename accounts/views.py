@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User, OtpCode
 from .forms import UserRegistrationForm, VerifyCodeForm, UserLoginForm
-from django.contrib.auth import login, logout, authenticate
 from utils import send_otp_code
 import random
 
@@ -77,3 +78,10 @@ class UserLoginView(View):
                 return redirect('home:home')
             messages.error(request, 'Phone or password is wrong', 'warning')
         return render(request, self.template_name, {'form': form})
+
+
+class UserLogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, 'You logged out successfully', 'success')
+        return redirect('home:home')
