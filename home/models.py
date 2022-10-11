@@ -17,7 +17,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
-    image = models.ImageField(upload_to='products/')
+    image = models.ImageField(upload_to='products/%Y/%m/%d/')
     description = models.TextField()
     price = models.IntegerField()
     is_available = models.BooleanField(default=True)
